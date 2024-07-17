@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @project_assignment %>
+
+<div>
+  <%= link_to "Edit this project assignment", edit_project_assignment_path(@project_assignment) %> |
+  <%= link_to "Back to project assignments", project_assignments_path %>
+
+  <%= button_to "Destroy this project assignment", @project_assignment, method: :delete %>
+</div>
