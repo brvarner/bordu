@@ -15,9 +15,9 @@ class TasksTest < ApplicationSystemTestCase
     click_on "New task"
 
     fill_in "Completed at", with: @task.completed_at
-    fill_in "Creator id", with: @task.creator_id_id
+    fill_in "Creator id", with: @task.creator_id
     fill_in "Description", with: @task.description
-    fill_in "Project id", with: @task.project_id_id
+    fill_in "Project id", with: @task.project_id
     fill_in "Title", with: @task.title
     click_on "Create Task"
 
@@ -30,9 +30,9 @@ class TasksTest < ApplicationSystemTestCase
     click_on "Edit this task", match: :first
 
     fill_in "Completed at", with: @task.completed_at
-    fill_in "Creator id", with: @task.creator_id_id
+    fill_in "Creator id", with: @task.creator_id
     fill_in "Description", with: @task.description
-    fill_in "Project id", with: @task.project_id_id
+    fill_in "Project id", with: @task.project_id
     fill_in "Title", with: @task.title
     click_on "Update Task"
 

@@ -17,7 +17,7 @@ class TaskUpdatesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create task_update" do
     assert_difference("TaskUpdate.count") do
-      post task_updates_url, params: { task_update: { author_id_id: @task_update.author_id_id, body: @task_update.body, task_id_id: @task_update.task_id_id } }
+      post task_updates_url, params: { task_update: { author_id: @task_update.author_id, body: @task_update.body, task_id: @task_update.task_id } }
     end
 
     assert_redirected_to task_update_url(TaskUpdate.last)
@@ -34,7 +34,7 @@ class TaskUpdatesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update task_update" do
-    patch task_update_url(@task_update), params: { task_update: { author_id_id: @task_update.author_id_id, body: @task_update.body, task_id_id: @task_update.task_id_id } }
+    patch task_update_url(@task_update), params: { task_update: { author_id: @task_update.author_id, body: @task_update.body, task_id: @task_update.task_id } }
     assert_redirected_to task_update_url(@task_update)
   end
 

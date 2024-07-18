@@ -35,7 +35,7 @@ task sample_data: :environment do
       password: "password",
       first_name: first,
       last_name: last,
-    )
+    ).tap { |u| u.errors.full_messages }
   end
 
   pp "15 users created"
@@ -45,11 +45,11 @@ task sample_data: :environment do
   # create projects
   5.times do 
     Project.create(
-      creator_id: users.sample,
+      creator_id: users.sample.id,
       name: Faker::Sport.sport,
       description: Faker::Music::SmashingPumpkins.lyric,
       complete: [true, false].sample
-    )
+    ).tap { |p| p.errors.full_messages }
   end
 
   pp "5 projects created"
@@ -59,10 +59,10 @@ task sample_data: :environment do
   # create project assignments
   10.times do 
     ProjectAssignment.create(
-      user_id: users.sample,
-      project_id: projects.sample,
+      user_id: users.sample.id,
+      project_id: projects.sample.id,
       role: ["admin", "user"].sample
-    )
+    ).tap { |pa| pa.errors.full_messages }
   end
 
   pp "10 project assignments created"
@@ -70,12 +70,12 @@ task sample_data: :environment do
   # create tasks
   25.times do
     Task.create(
-      project_id: projects.sample,
+      project_id: projects.sample.id,
       title: Faker::Music::SmashingPumpkins.song,
       description: Faker::Games::Myst.quote,
-      creator_id: users.sample,
+      creator_id: users.sample.id,
       status: ["unassigned", "assigned", "in progress", "completed"].sample
-    )
+    ).tap { |t| t.errors.full_messages }
   end
 
   pp "25 tasks created"
@@ -85,9 +85,9 @@ task sample_data: :environment do
   # create task assignments
   50.times do 
     TaskAssignment.create(
-      user_id: users.sample,
-      task_id: tasks.sample
-    )
+      user_id: users.sample.id,
+      task_id: tasks.sample.id
+    ).tap { |ta| ta.errors.full_messages }
   end
 
   pp "50 task assignments created"
@@ -95,10 +95,10 @@ task sample_data: :environment do
   # create task updates
   30.times do 
     TaskUpdate.create(
-      task_id: tasks.sample,
-      author_id: users.sample,
+      task_id: tasks.sample.id,
+      author_id: users.sample.id,
       body: Faker::TvShows::Simpsons.quote,
-    )
+    ).tap { |tu| tu.errors.full_messages }
   end
 
   pp "30 task updates created"

@@ -14,8 +14,8 @@ class TaskAssignmentsTest < ApplicationSystemTestCase
     visit task_assignments_url
     click_on "New task assignment"
 
-    fill_in "Task id", with: @task_assignment.task_id_id
-    fill_in "User id", with: @task_assignment.user_id_id
+    fill_in "Task id", with: @task_assignment.task_id
+    fill_in "User id", with: @task_assignment.user_id
     click_on "Create Task assignment"
 
     assert_text "Task assignment was successfully created"
@@ -26,8 +26,8 @@ class TaskAssignmentsTest < ApplicationSystemTestCase
     visit task_assignment_url(@task_assignment)
     click_on "Edit this task assignment", match: :first
 
-    fill_in "Task id", with: @task_assignment.task_id_id
-    fill_in "User id", with: @task_assignment.user_id_id
+    fill_in "Task id", with: @task_assignment.task_id
+    fill_in "User id", with: @task_assignment.user_id
     click_on "Update Task assignment"
 
     assert_text "Task assignment was successfully updated"

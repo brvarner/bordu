@@ -14,9 +14,9 @@ class TaskUpdatesTest < ApplicationSystemTestCase
     visit task_updates_url
     click_on "New task update"
 
-    fill_in "Author id", with: @task_update.author_id_id
+    fill_in "Author id", with: @task_update.author_id
     fill_in "Body", with: @task_update.body
-    fill_in "Task id", with: @task_update.task_id_id
+    fill_in "Task id", with: @task_update.task_id
     click_on "Create Task update"
 
     assert_text "Task update was successfully created"
@@ -27,9 +27,9 @@ class TaskUpdatesTest < ApplicationSystemTestCase
     visit task_update_url(@task_update)
     click_on "Edit this task update", match: :first
 
-    fill_in "Author id", with: @task_update.author_id_id
+    fill_in "Author id", with: @task_update.author_id
     fill_in "Body", with: @task_update.body
-    fill_in "Task id", with: @task_update.task_id_id
+    fill_in "Task id", with: @task_update.task_id
     click_on "Update Task update"
 
     assert_text "Task update was successfully updated"

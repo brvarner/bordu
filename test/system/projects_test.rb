@@ -15,7 +15,7 @@ class ProjectsTest < ApplicationSystemTestCase
     click_on "New project"
 
     check "Complete" if @project.complete
-    fill_in "Creator id", with: @project.creator_id_id
+    fill_in "Creator id", with: @project.creator_id
     fill_in "Description", with: @project.description
     fill_in "Name", with: @project.name
     click_on "Create Project"
@@ -29,7 +29,7 @@ class ProjectsTest < ApplicationSystemTestCase
     click_on "Edit this project", match: :first
 
     check "Complete" if @project.complete
-    fill_in "Creator id", with: @project.creator_id_id
+    fill_in "Creator id", with: @project.creator_id
     fill_in "Description", with: @project.description
     fill_in "Name", with: @project.name
     click_on "Update Project"

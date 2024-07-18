@@ -65,6 +65,6 @@ class TaskUpdatesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_update_params
-      params.require(:task_update).permit(:task_id_id, :author_id_id, :body)
+      params.require(:task_update).permit(:task_id, :author_id, :body)
     end
 end

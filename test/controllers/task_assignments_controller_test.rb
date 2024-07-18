@@ -17,7 +17,7 @@ class TaskAssignmentsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create task_assignment" do
     assert_difference("TaskAssignment.count") do
-      post task_assignments_url, params: { task_assignment: { task_id_id: @task_assignment.task_id_id, user_id_id: @task_assignment.user_id_id } }
+      post task_assignments_url, params: { task_assignment: { task_id: @task_assignment.task_id, user_id: @task_assignment.user_id } }
     end
 
     assert_redirected_to task_assignment_url(TaskAssignment.last)
@@ -34,7 +34,7 @@ class TaskAssignmentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update task_assignment" do
-    patch task_assignment_url(@task_assignment), params: { task_assignment: { task_id_id: @task_assignment.task_id_id, user_id_id: @task_assignment.user_id_id } }
+    patch task_assignment_url(@task_assignment), params: { task_assignment: { task_id: @task_assignment.task_id, user_id: @task_assignment.user_id } }
     assert_redirected_to task_assignment_url(@task_assignment)
   end
 

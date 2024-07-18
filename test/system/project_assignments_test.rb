@@ -14,8 +14,8 @@ class ProjectAssignmentsTest < ApplicationSystemTestCase
     visit project_assignments_url
     click_on "New project assignment"
 
-    fill_in "Project id", with: @project_assignment.project_id_id
-    fill_in "User id", with: @project_assignment.user_id_id
+    fill_in "Project id", with: @project_assignment.project_id
+    fill_in "User id", with: @project_assignment.user_id
     click_on "Create Project assignment"
 
     assert_text "Project assignment was successfully created"
@@ -26,8 +26,8 @@ class ProjectAssignmentsTest < ApplicationSystemTestCase
     visit project_assignment_url(@project_assignment)
     click_on "Edit this project assignment", match: :first
 
-    fill_in "Project id", with: @project_assignment.project_id_id
-    fill_in "User id", with: @project_assignment.user_id_id
+    fill_in "Project id", with: @project_assignment.project_id
+    fill_in "User id", with: @project_assignment.user_id
     click_on "Update Project assignment"
 
     assert_text "Project assignment was successfully updated"
