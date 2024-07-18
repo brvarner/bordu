@@ -1,11 +1,14 @@
 class CreateTaskUpdates < ActiveRecord::Migration[7.1]
   def change
     create_table :task_updates do |t|
-      t.references :task_id, null: false, foreign_key: true
-      t.references :author_id, null: false, foreign_key: true
+      t.integer :task_id
+      t.integer :author_id
       t.text :body
 
       t.timestamps
     end
+
+      add_foreign_key :task_updates, :tasks, column: :task_id
+      add_foreign_key :task_updates, :users, column: :author_id
   end
 end

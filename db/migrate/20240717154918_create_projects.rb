@@ -4,9 +4,11 @@ class CreateProjects < ActiveRecord::Migration[7.1]
       t.string :name
       t.text :description
       t.boolean :complete
-      t.references :creator_id, null: false, foreign_key: true
-
+      t.integer :creator_id  
+      
       t.timestamps
     end
+
+    add_foreign_key :projects, :users, column: :creator_id
   end
 end
