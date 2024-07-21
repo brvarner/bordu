@@ -14,7 +14,7 @@
 #
 class Task < ApplicationRecord
   belongs_to :project
-  belongs_to :user, foreign_key: :creator_id
+  belongs_to :creator, class_name: :User
 
   has_many :task_assignments
   has_many :task_updates

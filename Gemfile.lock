@@ -216,6 +216,8 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
+    rails-observers (0.1.5)
+      activemodel (>= 4.0)
     rails_db (2.4.4)
       activerecord
       csv
@@ -317,6 +319,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rack-mini-profiler
   rails (~> 7.1.3, >= 7.1.3.4)
+  rails-observers
   rails_db
   selenium-webdriver
   sprockets-rails
