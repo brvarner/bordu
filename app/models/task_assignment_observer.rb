@@ -6,8 +6,5 @@ class TaskAssignmentObserver < ActiveRecord::Observer
         title = task_assignment.task.title
         desc = task_assignment.task.description
         recipient = task_assignment.recipient
-
-        pp task_creator
-        pp recipient
     end
 end

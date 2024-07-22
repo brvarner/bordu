@@ -59,6 +59,7 @@ group :development do
   gem "faker"
   gem "rails_db"
   gem "annotate"
+  gem "letter_opener"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   gem "rack-mini-profiler"
