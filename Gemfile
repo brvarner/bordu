@@ -9,6 +9,8 @@ gem "devise"
 
 gem 'rails-observers'
 
+gem 'sendgrid-ruby'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
@@ -59,7 +61,6 @@ group :development do
   gem "faker"
   gem "rails_db"
   gem "annotate"
-  gem "letter_opener"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   gem "rack-mini-profiler"

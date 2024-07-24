@@ -1,5 +1,5 @@
 class TaskAssignmentMailer < ApplicationMailer
-  default from: "test@test.com"
+  default from: "Bordu <info@bordu.vip>"
 
   # We get user Id and task ID, so theoretically we should have access to all that info we're looking for
   def assignment_email
