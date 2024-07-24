@@ -14,10 +14,10 @@ class UpdatesMailbox < ApplicationMailbox
     return if safe_body.blank?
 
     token = extract_token_from_body(safe_body)
-    return unless valid_token?(token, user.id, extract_task_from_subject.id)
+    return unless valid_token?(token, user.id, extract_task_id_from_email)
 
     task_update = TaskUpdate.new(
-      task: extract_task_from_subject.id,
+      task: extract_task_id_from_email,
       author_id: user.id,
       body: safe_body,
       message_id: inbound_email.message_id
@@ -28,17 +28,16 @@ class UpdatesMailbox < ApplicationMailbox
 
   private 
 
-  def extract_user_id_from_reply_to
-    mail.reply_to&.first&.split('<')&.last&.split('@')&.first&.split('.')&.last
+  def extract_user_id_from_email
+    mail.to.first.split('@').first.split('.').last.to_i  
   end
 
   def sanitize_email_body(body)
     Rails::Html::WhiteListSanitizer.new.sanitize(body)
   end
 
-  def extract_task_from_subject
-    task_id = mail.subject[/Task #(\d+)/, 1]
-    Task.find_by(id: task_id)
+  def extract_task_id_from_email
+    mail.to.first.split('@').first.split('.').second.to_i
   end
 
   def extract_token_from_body(body)
@@ -50,7 +49,7 @@ class UpdatesMailbox < ApplicationMailbox
     ActiveSupport::SecurityUtils.secure_compare(token, expected_token)
   end
 
-  def generate_token
+  def generate_token(user_id, task_id)
     key = SecureRandom.hex(10)
     Digest::SHA256.hexdigest("#{user_id}-#{task_id}-#{key}")
   end

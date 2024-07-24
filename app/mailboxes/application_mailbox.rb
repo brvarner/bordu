@@ -1,5 +1,4 @@
 class ApplicationMailbox < ActionMailbox::Base
-  # routing /something/i => :somewhere
-  routing(/^save@/i     => :forwards)
-  routing(/@replies\./i => :replies)
+  # Routing for emails sent to updates.<task_id>.<user_id>@app.bordu.vip
+  routing(/@updates\./i => :task_updates)
 end

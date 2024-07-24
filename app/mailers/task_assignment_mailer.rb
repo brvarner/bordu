@@ -5,7 +5,7 @@ class TaskAssignmentMailer < ApplicationMailer
     @recipient = User.find(params[:user_id])
     @task = Task.find(params[:task_id])
     @token = generate_token(@recipient.id, @task.id)
-    mail(to: @recipient.email, subject: "Task ##{@task.id} - #{@task.title} Assigned To You", reply_to: "'Bordu' <updates.#{@recipient.id}@parse.bordu.vip>")
+    mail(to: @recipient.email, subject: "Task ##{@task.id} - #{@task.title} Assigned To You", reply_to: "'Bordu' <updates.#{@recipient.id}.#{@task_id}@parse.bordu.vip>")
   end
 
   private
