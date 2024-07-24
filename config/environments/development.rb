@@ -55,6 +55,8 @@ Rails.application.configure do
   :authentication => :plain,
   :enable_starttls_auto => true
 }
+config.action_mailbox.ingress = :sendgrid
+
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
