@@ -1,14 +1,27 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Projects</h1>
-
-<div id="projects">
-  <% @projects.each do |project| %>
-    <%= render project %>
-    <p>
-      <%= link_to "Show this project", project %>
-    </p>
-  <% end %>
+<div class="d-flex justify-content-center align-items-center mb-5">
+  <h1>Projects</h1>
 </div>
 
-<%= link_to "New project", new_project_path %>
+<div class="row">
+  <div class="bg-primary w-25 col-3 d-flex justify-content-center align-items-start rounded py-5">
+    <div id="projects">
+      <div class="list-group">
+        <% @projects.each do |project| %>
+            <%= render "projects/project_select", project: project %>
+        <% end %>
+      </div>
+
+      <%= link_to "New Project", new_project_path, class: "btn btn-danger mt-5" %>
+      
+    </div>
+  </div>
+  <div class="col-9">
+    <div class="card">
+      <div class="card-body bg-secondary h-100">
+        
+      </div>
+    </div>
+  </div>
+</div>

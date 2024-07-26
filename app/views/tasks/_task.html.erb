@@ -1,4 +1,6 @@
-<div id="<%= dom_id task %>">
+<div id="<%= dom_id task %>" class="card">
+  <div class="card-body">
+  <a href="/tasks/<%= task.id %>">
   <p>
     <strong>Project:</strong>
     <%= task.project_id %>
@@ -23,5 +25,6 @@
     <strong>Completed at:</strong>
     <%= task.completed_at %>
   </p>
-
+  </a>
+  </div>
 </div>
