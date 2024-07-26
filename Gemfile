@@ -13,6 +13,8 @@ gem 'sendgrid-ruby'
 
 gem 'dotenv-rails'
 
+gem 'rubocop', require: false
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 

@@ -1,57 +1,57 @@
+# Eventually, we'll implement a token system to ensure that only those assigned can reply to the email that writes to the database.
+
 class UpdatesMailbox < ApplicationMailbox
   def process
     # Get a user id from reply-to or bail
-    reply_user = extract_user_id_from_reply_to
+    reply_user = extract_user_id_from_email
+    Rails.logger.info "Extracting User ID: #{reply_user}"
     return if reply_user.blank?
 
     # Find a user by the id or bail
     user = User.find_by(id: reply_user)
+    Rails.logger.info "Finding user: #{user.inspect}"
     return if user.nil?
 
-    return if TaskUpdate.exists?(message_id: inbound_email.message_id)
+    if TaskUpdate.exists?(message_id: inbound_email.message_id)
+      Rails.logger.info "Task update already exists for this message_id."
+      return
+    end
 
     safe_body = sanitize_email_body(mail_body)
+    Rails.logger.info "Sanitizing email..."
     return if safe_body.blank?
 
-    token = extract_token_from_body(safe_body)
-    return unless valid_token?(token, user.id, extract_task_id_from_email)
+    task = Task.find_by(id: extract_task_id_from_email)
+    Rails.logger.info "Finding task: #{task.inspect}"
+    return if task.nil?
 
     task_update = TaskUpdate.new(
-      task: extract_task_id_from_email,
+      task: task,
       author_id: user.id,
       body: safe_body,
       message_id: inbound_email.message_id
     )
 
-    task_update.save!
+    Rails.logger.info "Receiving update..."
+    if task_update.save
+      Rails.logger.info "Task update saved successfully."
+    else
+      Rails.logger.error "Failed to save task update: #{task_update.errors.full_messages.join(", ")}"
+    end
   end
 
   private 
 
   def extract_user_id_from_email
-    mail.to.first.split('@').first.split('.').last.to_i  
+    mail.to.first.split('@').first.split('.').second.to_i
+  end
+
+  def extract_task_id_from_email
+    mail.to.first.split('@').first.split('.').third.to_i
   end
 
   def sanitize_email_body(body)
     Rails::Html::WhiteListSanitizer.new.sanitize(body)
-  end
-
-  def extract_task_id_from_email
-    mail.to.first.split('@').first.split('.').second.to_i
-  end
-
-  def extract_token_from_body(body)
-    body[/Token: (\h+)/, 1]
-  end
-
-  def valid_token?(token, user_id, task_id)
-    expected_token = generate_token(user_id, task_id)
-    ActiveSupport::SecurityUtils.secure_compare(token, expected_token)
-  end
-
-  def generate_token(user_id, task_id)
-    key = SecureRandom.hex(10)
-    Digest::SHA256.hexdigest("#{user_id}-#{task_id}-#{key}")
   end
 
   def mail_body
