@@ -13,11 +13,13 @@
             <%= render "projects/project_select", project: project %>
         <% end %>
       </div>
-      <%= link_to "New Project", new_project_path, class: "btn btn-danger mt-5" %>      
+      <div class="d-flex justify-content-center align-items-center">
+        <%= link_to "New Project", new_project_path, class: "btn btn-danger mt-5" %>      
+      </div>
     </div>
   </div>
 
-  <div>
+  <div class="col-9">
     <%= render 'tasks/container', projects: @projects  %>
   </div>
 </div>
