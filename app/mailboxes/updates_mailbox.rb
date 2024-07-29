@@ -13,12 +13,12 @@ class UpdatesMailbox < ApplicationMailbox
     return if user.nil?
 
     if TaskUpdate.exists?(message_id: inbound_email.message_id)
-      Rails.logger.info "Task update already exists for this message_id."
+      Rails.logger.info 'Task update already exists for this message_id.'
       return
     end
 
     safe_body = sanitize_email_body(mail_body)
-    Rails.logger.info "Sanitizing email..."
+    Rails.logger.info 'Sanitizing email...'
     return if safe_body.blank?
 
     task = Task.find_by(id: extract_task_id_from_email)
@@ -26,21 +26,21 @@ class UpdatesMailbox < ApplicationMailbox
     return if task.nil?
 
     task_update = TaskUpdate.new(
-      task: task,
+      task:,
       author_id: user.id,
       body: safe_body,
       message_id: inbound_email.message_id
     )
 
-    Rails.logger.info "Receiving update..."
+    Rails.logger.info 'Receiving update...'
     if task_update.save
-      Rails.logger.info "Task update saved successfully."
+      Rails.logger.info 'Task update saved successfully.'
     else
-      Rails.logger.error "Failed to save task update: #{task_update.errors.full_messages.join(", ")}"
+      Rails.logger.error "Failed to save task update: #{task_update.errors.full_messages.join(', ')}"
     end
   end
 
-  private 
+  private
 
   def extract_user_id_from_email
     mail.to.first.split('@').first.split('.').second.to_i
@@ -55,6 +55,18 @@ class UpdatesMailbox < ApplicationMailbox
   end
 
   def mail_body
-    mail.decoded
+    if mail.multipart?
+      mail.parts.each do |part|
+        if part.content_type.start_with?('text/plain')
+          return plain_text_body = part.decoded
+        elsif part.content_type.start_with?('text/html')
+          return html_body = part.decoded
+        end
+      end
+    else
+      email_body = mail.decoded
+    end
   end
+
+
 end
