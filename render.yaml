@@ -16,7 +16,7 @@ services:
       - key: DATABASE_URL
         fromDatabase:
           name: bordu
-          property: postgresql://bordu_user:${BORDU_DB_PASSWORD}@${DB_HOST}:5432/bordu
+          property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
       - key: SENDGRID_API_KEY
