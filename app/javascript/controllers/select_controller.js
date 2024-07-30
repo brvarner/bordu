@@ -1,16 +1,28 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-    static targets = ["projectSelect"]
+  static targets = ["project", "tasks"];
 
-    initialize () {
-        this.index = 0
-        this.showSelectedSlide()
-    }
+  connect() {
+    this.showTasksForProject(this.projectTargets[0]);
+  }
 
-    showSelectedSlide() {
-        this.projectSelectTargets.forEach((element, index) => {
-            element.hidden = index !== this.index
-        })
-    }
+  select(e) {
+    this.showTasksForProject(e.currentTarget);
+  }
+
+  showTasksForProject(project) {
+    this.projectTargets.forEach((element) => {
+      element.classList.remove("active");
+    });
+    project.classList.add("active");
+
+    const projectId = project.dataset.projectId;
+    this.taskTargets.forEach((tasks) => {
+      tasks.classList.add("d-none");
+      if (tasks.dataset.projectId === projectId) {
+        tasks.classList.remove("d-none");
+      }
+    });
+  }
 }
