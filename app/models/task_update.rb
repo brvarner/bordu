@@ -8,6 +8,7 @@
 #  body       :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  message_id :integer
 #
 class TaskUpdate < ApplicationRecord
   belongs_to :task

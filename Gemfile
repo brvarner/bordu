@@ -7,6 +7,14 @@ gem "rails", "~> 7.1.3", ">= 7.1.3.4"
 
 gem "devise"
 
+gem 'rails-observers'
+
+gem 'sendgrid-ruby'
+
+gem 'dotenv-rails'
+
+gem 'rubocop', require: false
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <span class="text-secondary text-center" style="font-size:8px">##- Please type your reply above this line -##</span>
+    <h1> Task <%= @task.id %>: <%= @task.title %> Assigned to You!</h1>
+    <p>
+      <%= @recipient.first_name %>, <%= @task.creator.first_name %> <%= @task.creator.last_name %> has assigned you a task.
+    </p>
+    <p>
+      Description: <%= @task.description %>
+    </p>
+    <p>Reply to this email to update them on your progress!</p>
+    <p style="display: none;">Token: @token</p>
+    <p>Thank you!</p>
+  </body>
+</html>

@@ -9,6 +9,6 @@
 #  updated_at :datetime         not null
 #
 class TaskAssignment < ApplicationRecord
-  belongs_to :user
   belongs_to :task
+  belongs_to :recipient, class_name: :User, foreign_key: :user_id
 end

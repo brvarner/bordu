@@ -1,0 +1,13 @@
+##- Please type your reply above this line -##
+
+<%= @task.title %> Assigned to You!
+======================================
+
+<%= @recipient.first_name %>, <%= @task.creator.first_name %> <%= @task.creator.last_name %> has assigned you a task.
+
+Description: <%= @task.description %>
+
+Reply to this email to update them on your progress!
+Token: <%= @token %>
+Thank you!
+
