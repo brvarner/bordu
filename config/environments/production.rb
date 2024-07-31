@@ -88,10 +88,9 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
   config.action_mailbox.ingress = :sendgrid
-  config.action_mailbox.ingress_password = ENV.fetch('AM_PW')
+  config.action_mailbox.ingress_password = Rails.application.credentials.dig(:action_mailbox, :ingress_password)
 
-  puts "Ingress password: #{Rails.application.credentials.action_mailbox.ingress_password}"
-
+  puts "ingress pw: #{Rails.application.credentials.dig(:action_mailbox, :ingress_password)}"
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
