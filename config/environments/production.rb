@@ -90,6 +90,8 @@ Rails.application.configure do
   config.action_mailbox.ingress = :sendgrid
   config.action_mailbox.ingress_password = ENV.fetch('AM_PW')
 
+  Rails.logger.debug "Ingress password: #{Rails.application.credentials.action_mailbox.ingress_password}"
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
