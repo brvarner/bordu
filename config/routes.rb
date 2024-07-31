@@ -13,4 +13,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'tasks#index'
+
+  mount ActionMailbox::Engine => "/rails/action_mailbox"
 end
