@@ -65,7 +65,7 @@ Rails.application.configure do
   # "info" includes generic and useful information about system operation, but avoids logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
   # want to log everything, set the level to "debug".
-  config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'info')
+  config.log_level = :debug
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -90,7 +90,6 @@ Rails.application.configure do
   config.action_mailbox.ingress = :sendgrid
   config.action_mailbox.ingress_password = Rails.application.credentials.dig(:action_mailbox, :ingress_password)
 
-  puts "ingress pw: #{Rails.application.credentials.dig(:action_mailbox, :ingress_password)}"
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
