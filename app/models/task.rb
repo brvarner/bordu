@@ -16,6 +16,6 @@ class Task < ApplicationRecord
   belongs_to :project
   belongs_to :creator, class_name: :User
 
-  has_many :task_assignments
-  has_many :task_updates
+  has_many :assignments, class_name: :TaskAssignment
+  has_many :updates, class_name: :TaskUpdate
 end

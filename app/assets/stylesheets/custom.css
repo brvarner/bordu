@@ -117,3 +117,9 @@
     background-color: #ff443a;
     border-color: #ff443a;
   }
+
+  .list-group-item-action.active {
+    background-color: #0189a4;
+    color: white;
+    border-radius: 5%;
+  }

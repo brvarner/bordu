@@ -1,0 +1,8 @@
+<div class="col">
+    <div class="card">
+        <div class="card-body bg-secondary h-100" data-td-target="content" data-status=<%= column_status %>>
+            <%= column_status.humanize %>
+            <%= render "tasks/task_list", tasks: project.tasks.where(status: "#{column_status}") %>
+        </div>
+    </div>
+</div>

@@ -1,40 +1,8 @@
-<div data-controller="td">
-  <% @projects.each do |project| %>
-    <div class="d-none" data-td-target="tasks" data-project-id="<%= project.id %>">
-      <div class="container row">
-        <div class="col">
-          <div class="card">
-            <div class="card-body bg-secondary h-100" data-td-target="content" data-status="unassigned">
-              Unassigned
-              <%= render "tasks/task_list", tasks: project.tasks.where(status: "unassigned") %>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body bg-secondary h-100" data-td-target="content" data-status="assigned">
-              Assigned
-              <%= render "tasks/task_list", tasks: project.tasks.where(status: "assigned") %>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body bg-secondary h-100" data-td-target="content" data-status="in_progress">
-              In Progress
-              <%= render "tasks/task_list", tasks: project.tasks.where(status: "in_progress") %>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body bg-secondary h-100" data-td-target="content" data-status="completed">
-              Complete
-              <%= render "tasks/task_list", tasks: project.tasks.where(status: "completed") %>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  <% end %>
-</div>
+<% @projects.each do |project| %>
+  <div class="container row" data-kanban-target="taskBoard" data-project-id="<%= project.id %>">
+      <%= render 'tasks/column', column_status: "unassigned", project: project %>
+      <%= render 'tasks/column', column_status: "assigned", project: project %>
+      <%= render 'tasks/column', column_status: "in progress", project: project %>
+      <%= render 'tasks/column', column_status: "complete", project: project %>
+  </div>
+<% end %>
