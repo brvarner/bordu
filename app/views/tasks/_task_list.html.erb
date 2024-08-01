@@ -8,6 +8,8 @@
         </div>
       </div>
     </div>
+
+  <!-- Task Modal -->
     <div class="modal fade" id="task<%= task.id %>Modal" tabindex="-1" aria-labelledby="taskModal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content bg-light">
@@ -32,10 +34,19 @@
               </div>
             <% end %>
           </div>
-          <div class="modal-footer border-0">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
+
+          <% if task.status != 'completed' %>           
+            <div class="modal-footer border-0">
+              <button type="button" class="btn btn-secondary">Change Status</button>
+              <button type="button" class="btn btn-primary">Assign Task</button>
+            </div>
+          <% else %>
+            <div class="modal-footer border-0">
+              <button class="btn btn-danger" data-bs-dismiss="modal">
+                Close
+              </button>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
