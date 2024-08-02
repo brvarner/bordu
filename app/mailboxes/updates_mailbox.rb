@@ -67,6 +67,4 @@ class UpdatesMailbox < ApplicationMailbox
       email_body = mail.decoded
     end
   end
-
-
 end
