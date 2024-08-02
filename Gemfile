@@ -9,11 +9,13 @@ gem "devise"
 
 gem 'rails-observers'
 
-gem 'sendgrid-ruby'
-
 gem 'dotenv-rails'
 
 gem 'rubocop', require: false
+
+gem 'mailgun-ruby'
+
+gem 'rest-client'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"

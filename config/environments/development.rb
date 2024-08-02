@@ -45,19 +45,11 @@ Rails.application.configure do
 
   config.action_mailer.perform_deliveries = true
 
-  config.action_mailer.default_url_options = { host: 'bordu.vip', protocol: 'https' }
-
-  ActionMailer::Base.smtp_settings = {
-    user_name: 'apikey',
-    password: ENV.fetch('SENDGRID_API_KEY'),
-    domain: 'bordu.vip',
-    address: 'smtp.sendgrid.net',
-    port: 587,
-    authentication: :plain,
-    enable_starttls_auto: true
-  }
-
-  config.action_mailbox.ingress = :sendgrid
+  config.action_mailer.default_url_options = { host: 'parse.bordu.vip', protocol: 'https' }
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = { api_key: Rails.application.credentials.dig(:action_mailer, :api_key),
+                                            domain: Rails.application.credentials.dig(:action_mailer, :domain)}
+  config.action_mailbox.ingress = :mailgun
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
