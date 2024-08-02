@@ -17,7 +17,7 @@ gem 'mailgun-ruby'
 
 gem 'rest-client'
 
-gem 'actionmailbox'
+gem 'actionmailbox', require: 'action_mailbox/engine'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
