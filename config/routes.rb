@@ -15,4 +15,5 @@ Rails.application.routes.draw do
   root 'tasks#index'
 
   mount ActionMailbox::Engine => '/rails/action_mailbox'
+  post '/rails/action_mailbox/mailgun/inbound_emails/mime' => 'action_mailbox/ingresses/mailgun/inbound_emails#create'
 end
