@@ -13,7 +13,7 @@ class UpdatesMailbox < ApplicationMailbox
     Rails.logger.info "Finding user: #{user.inspect}"
     return if user.nil?
 
-    if TaskUpdate.exists?(message_id: inbound_email.message_id)
+    if TaskUpdate.exists?(message_id: mail.message_id)
       Rails.logger.info 'Task update already exists for this message_id.'
       return
     end
@@ -30,7 +30,7 @@ class UpdatesMailbox < ApplicationMailbox
       task:,
       author_id: user.id,
       body: safe_body,
-      message_id: inbound_email.message_id
+      message_id: mail.message_id
     )
 
     Rails.logger.info 'Receiving update...'
