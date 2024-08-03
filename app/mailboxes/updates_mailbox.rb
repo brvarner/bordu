@@ -2,6 +2,7 @@
 
 class UpdatesMailbox < ApplicationMailbox
   def process
+    Rails.logger.info 'Email Received'
     # Get a user id from reply-to or bail
     reply_user = extract_user_id_from_email
     Rails.logger.info "Extracting User ID: #{reply_user}"
