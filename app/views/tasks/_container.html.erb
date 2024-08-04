@@ -1,0 +1,8 @@
+<% @projects.each do |project| %>
+  <div class="row g-3" data-kanban-target="taskBoard" data-project-id="<%= project.id %>">
+      <%= render 'tasks/column', column_status: "unassigned", project: project %>
+      <%= render 'tasks/column', column_status: "assigned", project: project %>
+      <%= render 'tasks/column', column_status: "in progress", project: project %>
+      <%= render 'tasks/column', column_status: "complete", project: project %>
+  </div>
+<% end %>

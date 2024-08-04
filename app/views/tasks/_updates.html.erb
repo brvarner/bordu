@@ -1,0 +1,7 @@
+<ul>
+    <% updates.each { |update| %>
+        <li>
+            <p><strong><%= update.author.first_name %>,  <%= time_ago_in_words(update.created_at) %> ago —</strong> <%= truncate(update.body) { link_to "Read more", '#' } %></p>
+        </li>
+    <% } %>
+</ul>
