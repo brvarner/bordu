@@ -1,12 +1,10 @@
 class TaskAssignmentMailer < ApplicationMailer
   default from: "Bordu <info@bordu.vip>"
 
-  # We get user Id and task ID, so theoretically we should have access to all that info we're looking for
   def assignment_email
     @recipient = User.find(params[:user_id])
     @task = Task.find(params[:task_id])
-    mail(to: @recipient.email, subject: "Task (#{@task.title}) Assigned To You")
+    mail(to: @recipient.email, subject: "Task ##{@task.id} - #{@task.title} Assigned To You", reply_to: "'Bordu' <updates.#{@recipient.id}.#{@task.id}@parse.bordu.vip>")
   end
 
-  # Theoretically, we can create an observer that looks for replies to the email after it's been sent?
 end

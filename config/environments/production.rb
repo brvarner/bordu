@@ -1,4 +1,4 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Prepare the ingress controller used to receive mail
@@ -56,16 +56,16 @@ Rails.application.configure do
 
   # Log to STDOUT by default
   config.logger = ActiveSupport::Logger.new(STDOUT)
-    .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
-    .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+                                       .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
+                                       .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # "info" includes generic and useful information about system operation, but avoids logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
   # want to log everything, set the level to "debug".
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  config.log_level = :info
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -77,8 +77,11 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = { host: "bordu.vip", protocol:"https" }
-
+  config.action_mailer.default_url_options = { host: 'parse.bordu.vip', protocol: 'https' }
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = { api_key: Rails.application.credentials.dig(:action_mailer, :api_key),
+                                            domain: Rails.application.credentials.dig(:action_mailer, :domain)}
+  config.action_mailbox.ingress = :mailgun
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
