@@ -1,0 +1,54 @@
+<% tasks.each do |task| %>
+    <div class="card bg-warning my-3 p-3" data-bs-toggle="modal" data-bs-target="#task<%= task.id %>Modal" style="cursor: pointer;">
+      <div class="card-body d-flex align-items-center justify-content-center">
+        <div class="card-title">
+          <h5 class="text-center font-weight-bold">
+            <%= task.title %>
+          </h5>
+        </div>
+      </div>
+    </div>
+
+  <!-- Task Modal -->
+    <div class="modal fade" id="task<%= task.id %>Modal" tabindex="-1" aria-labelledby="taskModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content bg-light">
+          <div class="modal-header text-center border-0">
+            <h3 class="modal-title w-100" id="exampleModalLabel"><%= task.title %></h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="d-flex flex-column justify-content-center align-items-center mb-3">
+              <p><strong>Created At:</strong> <%= task.created_at.strftime("%A, %B %d, %Y %I:%M %p %Z") %></p>
+              <p><strong>Created By:</strong> <%= task.creator.first_name %> <%= task.creator.last_name %></p>
+              <%= render 'tasks/assignments', assignments: task.assignments %>
+            </div>
+            <div>
+              <h4>Description</h4>
+              <p><%= task.description %></p>
+            </div>
+            <% if task.updates.exists? %>
+              <div>
+                <h4>Updates</h4>
+                <%= render 'tasks/updates', updates: task.updates %>
+              </div>
+            <% end %>
+          </div>
+
+          <% if task.status != 'completed' %>           
+            <div class="modal-footer border-0">
+              <button type="button" class="btn btn-secondary">Change Status</button>
+              <button type="button" class="btn btn-primary">Assign Task</button>
+            </div>
+          <% else %>
+            <div class="modal-footer border-0">
+              <button class="btn btn-danger" data-bs-dismiss="modal">
+                Close
+              </button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+<% end %>
+

@@ -1,10 +1,33 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @task %>
+<div class="container">
+  <div class="d-flex justify-content-center align-items-center">
+    <h1><%= @task.title %></h1>
+    <p><%= @task.id %></p>
+  </div>
 
-<div>
-  <%= link_to "Edit this task", edit_task_path(@task) %> |
-  <%= link_to "Back to tasks", tasks_path %>
+  <div class="d-flex justify-content-center align-items-center flex-column">
+    <p><strong>Created At:</strong> <%= @task.created_at.strftime("%A, %B %d, %Y %I:%M %p %Z") %></p>
+    <p><strong>Created By:</strong> <%= @task.creator.first_name %> <%= @task.creator.last_name %></p>
+    <%= render 'assignments', assignments: @task.task_assignments %>
+  </div>
+  <div>
+    <div>
+      <h2>Description</h2>
+      <p><%= @task.description %></p>
+    </div>
+    <% if @task.task_updates.exists? %>
+      <div>
+        <h2>Updates</h2>
+        <%= render 'updates', updates: @task.task_updates %>
+      </div>
+    <% end %>
+  </div>
+  <div>
+    <%= link_to "Edit this task", edit_task_path(@task) %> |
+    <%= link_to "Back to tasks", tasks_path %>
 
-  <%= button_to "Destroy this task", @task, method: :delete %>
+    <%= button_to "Destroy this task", @task, method: :delete %>
+  </div>
 </div>
+

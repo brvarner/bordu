@@ -6,14 +6,17 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <%= render 'shared/font_import' %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= stylesheet_link_tag 'application', 'custom', media: 'all', 'data-turbo-track': 'reload' %>
+    <%= render 'shared/cdn_assets' %>
   </head>
 
   <body>
-    <ul>
-      <li><%= link_to "New Task Assignment", new_task_assignment_path %></li>
-    </ul>
-    <%= yield %>
+    <%= render 'shared/navbar' %>
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>
