@@ -1,0 +1,2 @@
+class TaskUpdateMailer < ApplicationMailer
+end
