@@ -25,5 +25,6 @@ module Bordu
     # config.eager_load_paths << Rails.root.join("extras")
     config.api_only = false
     config.active_record.observers = :task_assignment_observer
+    config.exceptions_app = self.routes
   end
 end

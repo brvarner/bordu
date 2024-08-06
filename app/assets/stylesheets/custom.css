@@ -1,9 +1,16 @@
-html, body {
+html {
+  height: 100%
+}
+
+body {
   font-family: 'Libre Franklin', sans-serif !important;
   background: rgb(255,155,153);
   background: linear-gradient(135deg, rgba(255,155,153,1) 5%, rgba(255,138,0,1) 28%, rgba(252,220,0,1) 100%) no-repeat;
   background-size: cover;
-  height: 100%;
+  background-attachment: fixed;
+  min-height: 100%;
+  margin: 0;
+  padding: 0
 }
 
 .card-header .btn-link {

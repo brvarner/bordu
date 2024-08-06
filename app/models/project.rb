@@ -11,8 +11,8 @@
 #  updated_at  :datetime         not null
 #
 class Project < ApplicationRecord
-  belongs_to :user, foreign_key: :creator_id
-
+  belongs_to :creator, class_name: :User, foreign_key: :creator_id
   has_many :tasks
-  has_many :project_assignments
+  has_many :task_assignments, through: :tasks, source: :assignments
+  has_many :assigned_users, through: :task_assignments, source: :user
 end

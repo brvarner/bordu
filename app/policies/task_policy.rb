@@ -5,6 +5,10 @@ class TaskPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    false
+  end
+
   def show?
     user_is_owner_or_assigned?
   end

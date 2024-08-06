@@ -1,6 +1,5 @@
-<p style="color: green"><%= notice %></p>
 <div data-controller="kanban" class="container-fluid">
-  <h1 class="text-center mb-5">Projects</h1>
+  <h1 class="text-center mb-5"><%= current_user.first_name.humanize %>'s Projects</h1>
   <div class="row">
       <%= render 'projects/selector_switch', projects: @projects %>
     <div class="col-md-9 col-lg-10">
