@@ -1,7 +1,16 @@
+html {
+  height: 100%
+}
+
 body {
   font-family: 'Libre Franklin', sans-serif !important;
   background: rgb(255,155,153);
-  background: linear-gradient(135deg, rgba(255,155,153,1) 5%, rgba(255,138,0,1) 28%, rgba(252,220,0,1) 100%);
+  background: linear-gradient(135deg, rgba(255,155,153,1) 5%, rgba(255,138,0,1) 28%, rgba(252,220,0,1) 100%) no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100%;
+  margin: 0;
+  padding: 0
 }
 
 .card-header .btn-link {
@@ -147,3 +156,21 @@ body {
     color: white;
     border-radius: 3%;
   }
+
+  .parched {
+    background-color:  #FCF5E5;
+  }
+
+  .nav-link {
+    background-color: #ffffff !important;
+    height: 100% !important;
+    font-weight: 600 !important;
+    display: flex !important;
+    align-items: center !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+.navbar {
+    height: 60px; /* Adjust as needed */
+}

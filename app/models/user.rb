@@ -18,4 +18,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  has_many :created_projects, class_name: :Project, foreign_key: :creator_id
+  has_many :created_tasks, class_name: :Task, foreign_key: :creator_id
+  has_many :task_assignments
+  has_many :assigned_tasks, through: :task_assignments, source: :task
 end
