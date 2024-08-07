@@ -3,8 +3,10 @@ Rails.application.routes.draw do
   resources :task_assignments, except: %i[index show edit create]
   resources :project_assignments, except: %i[index]
   resources :task_updates, except: %i[index]
-  resources :tasks, except: %i[index edit]
-  resources :projects
+  resources :projects do
+    resources :tasks, only: [:create]
+  end
+  resources :tasks, except: [:create]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
