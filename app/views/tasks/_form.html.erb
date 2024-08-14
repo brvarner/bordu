@@ -1,6 +1,6 @@
-<%= form_with(model: task) do |form| %>
+<%= form_with(model: [project, task], local: false, data: { task_target: "form", action: "submit->task#createTask" }) do |form| %>
   <% if task.errors.any? %>
-    <div style="color: red">
+    <div class="alert alert-danger">
       <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
 
       <ul>
@@ -11,32 +11,27 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :project_id, style: "display: block" %>
-    <%= form.text_field :project_id %>
-  </div>
+  <%= form.hidden_field :project_id, data: { task_target: 'projectIdInput'} %>
+  <%= form.hidden_field :status, data: { task_target: "statusInput" } %>
 
-  <div>
+  <div class="form-group">
     <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, required: true %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
+    <%= form.text_area :description, required: true %>
   </div>
 
-  <div>
-    <%= form.label :creator_id, style: "display: block" %>
-    <%= form.text_field :creator_id %>
+  <div class="form-group">
+   <%= label_tag :assigned_user_emails, "Assigned User Emails (comma-separated)" %>
+   <!-- TODO unless column status == unassigned, required = true for assigned_user_emails -->
+   <%= text_field_tag :assigned_user_emails, nil, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :completed_at, style: "display: block" %>
-    <%= form.datetime_field :completed_at %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="modal-footer border-0">
+    <button type="button" class="btn btn-success" data-action="click->task#createTask">Create Task</button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
   </div>
 <% end %>

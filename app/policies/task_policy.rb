@@ -14,7 +14,20 @@ class TaskPolicy < ApplicationPolicy
   end
 
   def create?
-    user.present? && user.projects.exists?(id: record.project_id)
+    return false unless user.present?
+
+    if record.is_a?(Task)
+      # For an existing task
+      project = record.project
+    elsif record == Task
+      # For a new task (class check)
+      project_id = params[:project_id]
+      project = Project.find_by(id: project_id)
+    else
+      return false
+    end
+
+    project&.creator == user
   end
 
   def update?
@@ -28,7 +41,7 @@ class TaskPolicy < ApplicationPolicy
   private
 
   def user_is_owner?
-    user == record.project.user
+    user == record.creator
   end
 
   def user_is_owner_or_assigned?

@@ -1,4 +1,4 @@
-<div data-controller="kanban" class="container-fluid">
+<div data-controller="kanban task" class="container-fluid">
   <h1 class="text-center mb-5"><%= current_user.first_name.humanize %>'s Projects</h1>
   <div class="row">
       <%= render 'projects/selector_switch', projects: @projects %>
@@ -6,4 +6,17 @@
       <%= render 'tasks/container', projects: @projects %>
     </div>
   </div>
+
+<div class="modal fade" id="newTaskModal" tabindex="-1" aria-labelledby="newTaskModalLabel" aria-hidden="true" data-task-target="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newTaskModalLabel">Create New Task</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" data-task-target="modalBody">
+      </div>
+    </div>
+  </div>
+</div>
 </div>

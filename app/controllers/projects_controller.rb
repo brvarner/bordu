@@ -4,24 +4,40 @@ class ProjectsController < ApplicationController
 
   # GET /projects or /projects.json
   def index
-    @projects = policy_scope(Project)
-    authorize @projects
+    @projects = Project.where(creator_id: current_user.id)
+
+    return unless @projects.present?
+
+    project_ids = @projects.pluck(:id)
+    @projects = @projects.includes(tasks: %i[assignments updates creator])
+
+    @tasks_by_status = @projects.each_with_object({}) do |project, hash|
+      proj_tasks = project.tasks
+      hash[project.id] = {
+        'unassigned' => proj_tasks.where(status: 'unassigned'),
+        'assigned' => proj_tasks.where(status: 'assigned'),
+        'in progress' => proj_tasks.where(status: 'in progress'),
+        'completed' => proj_tasks.where(status: 'completed')
+      }
+    end
+
+    # authorize @projects
   end
 
   # GET /projects/1 or /projects/1.json
   def show
-    authorize @project
+    # authorize @project
   end
 
   # GET /projects/new
   def new
     @project = Project.new
-    authorize @project
+    # authorize @project
   end
 
   # GET /projects/1/edit
   def edit
-    authorize @project
+    # authorize @project
   end
 
   # POST /projects or /projects.json
@@ -30,7 +46,7 @@ class ProjectsController < ApplicationController
     @project.creator = current_user
     @project.complete = false
 
-    authorize @project
+    # authorize @project
 
     respond_to do |format|
       if @project.save
@@ -45,7 +61,7 @@ class ProjectsController < ApplicationController
 
   # PATCH/PUT /projects/1 or /projects/1.json
   def update
-    authorize @project
+    # authorize @project
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to project_url(@project), notice: 'Project was successfully updated.' }
@@ -59,7 +75,7 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/1 or /projects/1.json
   def destroy
-    authorize @project
+    # authorize @project
     @project.destroy!
 
     respond_to do |format|

@@ -22,5 +22,6 @@ class User < ApplicationRecord
   has_many :created_projects, class_name: :Project, foreign_key: :creator_id
   has_many :created_tasks, class_name: :Task, foreign_key: :creator_id
   has_many :task_assignments
+  has_many :participated_projects, through: :task_assignments, source: :project
   has_many :assigned_tasks, through: :task_assignments, source: :task
 end
