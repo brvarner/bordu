@@ -1,9 +1,11 @@
 class TasksController < ApplicationController
+  before_action :set_project
   before_action :set_task, only: %i[show edit update destroy]
+  # before_action { authorize @task || Task }
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all
+    @tasks_by_status = Task.where(project_id: @project.id).includes(%i[creator assignments updates]).group_by(&:status)
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -11,7 +13,11 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
-    @task = Task.new
+    @project = Project.find(params[:project_id])
+    @task = @project.tasks.build
+    # authorize @task
+
+    render partial: 'form', locals: { project: @project, task: @task }
   end
 
   # GET /tasks/1/edit
@@ -23,11 +29,22 @@ class TasksController < ApplicationController
     @task = @project.tasks.build(task_params)
     @task.creator = current_user
 
+    # authorize @task
+
     respond_to do |format|
       if @task.save
         assign_users_to_task
-        format.html { redirect_to task_url(@task), notice: 'Task was successfully created.' }
-        format.json { render :show, status: :created, location: @task }
+        ActionCable.server.broadcast 'task_channel',
+                                     { task: render_to_string(partial: 'tasks/task', locals: { task: @task }),
+                                       status: @task.status, task_id: @task.id }
+        task_html = render_to_string(partial: 'tasks/task', locals: { task: @task }, formats: [:html])
+        format.js
+        format.json do
+          render json: {
+                   task: @task.as_json(include: :project),
+                   task_html: task_html.html_safe
+                 }, status: :created
+        end
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @task.errors, status: :unprocessable_entity }
@@ -50,26 +67,32 @@ class TasksController < ApplicationController
 
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
+    # authorize @task
     @task.destroy!
 
     respond_to do |format|
-      format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
+      format.html { redirect_to projects_url, notice: 'Task was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
+  def set_project
+    @project = Project.find(params[:project_id])
+  end
+
   def set_task
     @task = Task.find(params[:id])
   end
 
   def task_params
-    params.require(:task).permit(:project_id, :title, :description, :status)
+    params.require(:task).permit(:title, :description, :status, :project_id)
   end
 
   def assign_users_to_task
+    # TODO: if user doesn't exist, send an email to assigned person with a signup
+    # link.
     emails = params[:assigned_user_emails]&.split(',')&.map(&:strip) || []
     emails.each do |email|
       user = User.find_by(email:)

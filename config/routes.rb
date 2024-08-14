@@ -4,9 +4,8 @@ Rails.application.routes.draw do
   resources :project_assignments, except: %i[index]
   resources :task_updates, except: %i[index]
   resources :projects do
-    resources :tasks, only: [:create]
+    resources :tasks
   end
-  resources :tasks, except: [:create]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -20,6 +19,7 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
   get 'welcome/index' => 'welcome#index', as: :welcome
+  delete 'tasks/:id' => 'tasks#destroy', as: :delete_task
 
   mount ActionMailbox::Engine => '/rails/action_mailbox'
   post '/rails/action_mailbox/mailgun/inbound_emails/mime' => 'action_mailbox/ingresses/mailgun/inbound_emails#create'

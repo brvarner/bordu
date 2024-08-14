@@ -1,4 +1,4 @@
-import consumer from "channels/consumer"
+import consumer from "channels/consumer";
 
 consumer.subscriptions.create("TaskChannel", {
   connected() {
@@ -10,6 +10,11 @@ consumer.subscriptions.create("TaskChannel", {
   },
 
   received(data) {
-    // Called when there's incoming data on the websocket for this channel
-  }
+    const taskList = document.querySelector(
+      `#project-${data.task.project_id} .${data.status}-tasks`
+    );
+    if (taskList) {
+      taskList.insertAdjacentHTML("beforeend", data.task);
+    }
+  },
 });

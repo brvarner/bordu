@@ -1,13 +1,13 @@
-<div class="col-12 col-sm-6 col-lg-3">
-    <div class="card h-100">
+<div class="col-12 col-sm-6 col-lg-3 rounded-bottom">
+    <div class="card border-0 h-100">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <%= column_status.humanize %>
-            <div role="button" data-action="click->task#openModal" data-status="<%= column_status %>" data-project-id="<%= project.id %>">
+            <div role="button" data-action="click->task#openModal" data-task-status="<%= column_status %>" data-project-id="<%= project.id %>">
                 <i class="fa-solid fa-plus"></i>
             </div>
         </div>
-        <div class="card-body bg-secondary h-100" data-task-target="content" data-status=<%= column_status %>>
-            <%= render "tasks/task_list", tasks: project.tasks.where(status: "#{column_status}") %>
+        <div id="<%= column_status %>-tasks" class="card-body bg-secondary h-100 rounded-bottom" data-task-target="content" data-status=<%= column_status %>>
+            <%= render "tasks/task_list", tasks: tasks %>
         </div>
     </div>
 </div>

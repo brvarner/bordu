@@ -14,8 +14,7 @@
         <h5 class="modal-title" id="newTaskModalLabel">Create New Task</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <%= render "tasks/form", task: Task.new %>
+      <div class="modal-body" data-task-target="modalBody">
       </div>
     </div>
   </div>

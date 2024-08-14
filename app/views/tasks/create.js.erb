@@ -1,0 +1,3 @@
+var newTask = '<%= j render(partial: 'tasks/task', locals: { task: @task }) %>';
+var taskContainer = $('#<%= @task.status %>-tasks');
+taskContainer.append(newTask);
