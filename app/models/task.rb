@@ -13,6 +13,8 @@
 #  status       :string
 #
 class Task < ApplicationRecord
+  validates :title, presence: true
+  validates :description, presence: true
   belongs_to :project
   belongs_to :creator, class_name: :User
   has_many :assignments, class_name: :TaskAssignment, dependent: :destroy

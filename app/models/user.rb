@@ -19,6 +19,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+
   has_many :created_projects, class_name: :Project, foreign_key: :creator_id
   has_many :created_tasks, class_name: :Task, foreign_key: :creator_id
   has_many :task_assignments
