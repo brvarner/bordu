@@ -4,6 +4,21 @@ Bordu is an app that makes communication easy! Users create projects and associa
 ![Bordie says hello](./app/assets/images/BordieMD.png)
 
 ## Table of Contents
+1. [Features](#features)
+   - [Coming Soon](#coming-soon)
+2. [Getting Started](#getting-started)
+   - [Prerequisites](#prerequisites)
+   - [Installation](#installation)
+   - [Email](#email)
+     - [Sending Email In Development](#sending-email-in-development)
+     - [Receiving Email In Development](#receiving-email-in-development)
+     - [Email Setup For The Curious](#email-setup-for-the-curious)
+       - [Action Mailer](#action-mailer)
+       - [Action Mailbox](#action-mailbox)
+3. [APIs](#apis)
+4. [Contribution Guide](#contribution-guide)
+5. [Contact](#contact)
+6. [ERD](#erd)
 
 ## Features
 - **Project Creation and Tracking** — Users can create projects with as many tasks as they like, and keep track of their progress by completing task after task.
@@ -16,7 +31,7 @@ I have a lot of work that's still ongoing on this project. You can track my prog
 - [ ] **AI Summary** — I hope to implement AI summaries of current tasks and their progress so users can get a sense of what's going on without having to click through each task.
 - [ ] **Organizations** — Eventually I'll implement organizational ownership of projects to ease collaboration.
 - [ ] **Slack and Text** — I want to allow the app to send and recieve text updates, and to allow updates to come in via Slack to make it even more accessible.
-- [ ] **Mobile App** — I'm planning to build a React Native app for Bordu eventually, that'll probably be its own repository. 
+- [ ] **Mobile App** — I'm planning to build a React Native app for Bordu eventually, that'll probably be its own repository. First, I'm going to make a PWA.
 - [ ] **Attachments** — I'm planning to support several types of attachments for updates. For example: PDF, images, CAD, and eventually more niche attachments like DICOM and STL.
 
 ## Getting Started
@@ -26,7 +41,7 @@ I have a lot of work that's still ongoing on this project. You can track my prog
 2. Ensure you have at least Ruby 3.3.3 installed.
 3. Ensure you have at least PostgreSQL 14.12 installed.
 4. Ensure you have at least Bundler 2.5.14 installed.
-5. (Optional) If you're running this on a Windows machine, you should set up WSL. [Here's a guide](https://gorails.com/setup/windows/10) on getting it running. I developed this app using WSL with Ubuntu 22.04.
+5. (Optional) If you're running this on a Windows machine, you should set up WSL. [Here's a guide](https://gorails.com/setup/windows/10) on getting it running. I developed this app using WSL2 with Ubuntu 22.04.
 
 ### Installation
 To start running Bordu, you just have to follow a few simple steps.
@@ -71,14 +86,29 @@ rails s
 8. Visit `http://localhost:3000` to view the application in your browser of choice.
 
 ### Email
-The [Action Mailer](https://guides.rubyonrails.org/action_mailer_basics.html) and [Action Mailbox](https://edgeguides.rubyonrails.org/action_mailbox_basics.html) functionality in this app was truly the bane of my existence, and it might be just as bad for you. I hope it's not though!
+The [Action Mailer](https://guides.rubyonrails.org/action_mailer_basics.html) and [Action Mailbox](https://edgeguides.rubyonrails.org/action_mailbox_basics.html) functionality in this app was tough. But it's easy if you just want to test the sending and receiving functionality locally. 
 
-If you do have to add [Rails Credentials](https://edgeguides.rubyonrails.org/security.html#environmental-security) to your project, you need to get used to this command:
+#### Sending Email in Development
+If you're on a Mac or *nix computer, you can test the mail capability by installing the [letter_opener gem](https://github.com/ryanb/letter_opener). The repo has instructions for setup. 
+
+Once you configure it, any email sent from Action Mailer will automatically load in the browser for viewing. 
+
+If you're using WSL2, it probably won't work. In that case, you'll need to find another way.
+
+#### Receiving Email in Development
+If you want to test the action mailbox functionality, follow all setup instructions and then navigate your browser to:
+```bash
+http://localhost:3000/rails/conductor/action_mailbox/inbound_emails
+```
+There, you can send emails and watch your app process them in real time.
+
+#### Email setup for the curious
+You'll probably have to add [Rails Credentials](https://edgeguides.rubyonrails.org/security.html#environmental-security) to your project, so you need to get used to this command:
 ```bash
 EDITOR="code --wait" bin/rails credentials:edit
 ```
 
-This command summons VSCode from your browser and opens your credentials file. From there, you can add the necessary credentials. Then, you'll close the file, and it'll encrypt and save your new credentials. You can see the credentials with `rails credentials:show`.
+This command summons VSCode from your browser and opens your credentials file. From there, you can add the necessary credentials. Then, you'll close the file, and it'll encrypt and save your new credentials. You can see the credentials with `rails credentials:show` if you have the same Master Key, you won't have the one to use my credentials bc it's never going to get pushed to GitHub.
 
 #### Action Mailer
 Action Mailer is how Rails sends emails. The following files and folders contain action mailer configuration:
@@ -112,7 +142,7 @@ If you've already got a mail service, you'll have to configure its inbound parse
 
 The Action Mailbox guide above will walk you through setting up your mailbox for the big four mail services.
 
-### APIs
+## APIs
 Bordu is a very lean app (hopefully). As of now, the only API in the project beyond those added by Gems/Rails's native APIs is Mailgun's mail API for obvious reasons.
 
 ## Contribution Guide
