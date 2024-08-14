@@ -357,6 +357,7 @@ DEPENDENCIES
   rest-client
   rubocop
   selenium-webdriver
+  simple_form
   sprockets-rails
   stimulus-rails
   turbo-rails

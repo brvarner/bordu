@@ -46,7 +46,7 @@ export default class extends Controller {
         const taskContainer = document.getElementById(
           `${data.task.status}-tasks`
         );
-        const newTaskHTML = data.task_html; // Assuming you return the rendered HTML
+        const newTaskHTML = data.task_html;
         taskContainer.insertAdjacentHTML("beforeend", newTaskHTML);
         this.modal.hide();
       } else {
