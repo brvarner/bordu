@@ -34,15 +34,14 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.save
         assign_users_to_task
+        html = render_to_string(partial: 'tasks/task', locals: { task: @task }, formats: [:html])
         ActionCable.server.broadcast 'task_channel',
-                                     { task: render_to_string(partial: 'tasks/task', locals: { task: @task }),
+                                     { task_html: html,
+                                       task: @task,
                                        status: @task.status, task_id: @task.id }
-        task_html = render_to_string(partial: 'tasks/task', locals: { task: @task }, formats: [:html])
-        format.js
         format.json do
           render json: {
-                   task: @task.as_json(include: :project),
-                   task_html: task_html.html_safe
+                   task: @task.as_json(include: :project)
                  }, status: :created
         end
       else

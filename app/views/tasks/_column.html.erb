@@ -6,7 +6,7 @@
                 <i class="fa-solid fa-plus"></i>
             </div>
         </div>
-        <div id="<%= column_status %>-tasks" class="card-body bg-secondary h-100 rounded-bottom" data-task-target="content" data-status=<%= column_status %>>
+        <div id="project-<%= project.id %>-<%= column_status %>-tasks" class="card-body bg-secondary h-100 rounded-bottom" data-task-target="content" data-status=<%= column_status %>>
             <%= render "tasks/task_list", tasks: tasks %>
         </div>
     </div>

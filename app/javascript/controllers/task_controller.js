@@ -42,13 +42,9 @@ export default class extends Controller {
 
       if (response.ok) {
         const data = await response.json();
-        console.log({ data });
-        const taskContainer = document.getElementById(
-          `${data.task.status}-tasks`
-        );
-        const newTaskHTML = data.task_html;
-        taskContainer.insertAdjacentHTML("beforeend", newTaskHTML);
-        this.modal.hide();
+        if (data) {
+          this.modal.hide();
+        }
       } else {
         console.error("Error creating task");
       }
