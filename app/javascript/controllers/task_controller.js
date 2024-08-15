@@ -23,6 +23,11 @@ export default class extends Controller {
       });
   }
 
+  preventClose(event) {
+    event.stopPropagation();
+    console.log("Prevent close triggered");
+  }
+
   async createTask(event) {
     event.preventDefault();
     const form = event.target.closest("form");
@@ -47,6 +52,33 @@ export default class extends Controller {
         }
       } else {
         console.error("Error creating task");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
+  async changeStatus(event) {
+    const taskId = event.currentTarget.dataset.taskId;
+    const newStatus = event.target.value;
+    const url = `/tasks/${taskId}/update_status`;
+
+    try {
+      const response = await fetch(url, {
+        method: "PATCH",
+        headers: {
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
+            .content,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+      } else {
+        console.error("Error updating status");
       }
     } catch (error) {
       console.error("Error:", error);

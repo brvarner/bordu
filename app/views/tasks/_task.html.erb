@@ -1,9 +1,12 @@
-<div id="task-<%= task.id %>"  class="card bg-warning my-3 p-3" data-bs-toggle="modal" data-bs-target="#task<%= task.id %>Modal" style="cursor: pointer;">
-<div class="card-body d-flex align-items-center justify-content-center">
+<div id="task-<%= task.id %>"  class="card bg-warning my-3 p-3 task" data-task-id=<%= task.id %> style="cursor: pointer;">
+<div class="card-body d-flex flex-column align-items-center justify-content-center">
   <div class="card-title">
     <h5 class="text-center font-weight-bold">
       <%= task.title %>
     </h5>
+  </div>
+  <div class="card-body">
+    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#task<%= task.id %>Modal">View Task</button>
   </div>
 </div>
 
@@ -31,21 +34,11 @@
                 <%= render 'tasks/updates', updates: task.updates %>
               </div>
             <% end %>
-          </div>
-
-          <% if task.status != 'completed' %>           
+          </div>       
             <div class="modal-footer border-0">
-              <button type="button" class="btn btn-secondary">Change Status</button>
               <button type="button" class="btn btn-primary">Assign Task</button>
               <%= link_to 'Delete Task', project_task_path(task.project, task), method: :delete, class: 'btn btn-danger', remote: true %>
             </div>
-          <% else %>
-            <div class="modal-footer border-0">
-              <button class="btn btn-danger" data-bs-dismiss="modal">
-                Close
-              </button>
-            </div>
-          <% end %>
         </div>
       </div>
     </div>
