@@ -18,7 +18,7 @@ class UpdatesMailbox < ApplicationMailbox
       return
     end
 
-    safe_body = sanitize_email_body(mail_body)
+    safe_body = sanitize_and_trim_email_body(mail_body)
     Rails.logger.info 'Sanitizing email...'
     return if safe_body.blank?
 
@@ -51,8 +51,21 @@ class UpdatesMailbox < ApplicationMailbox
     mail.to.first.split('@').first.split('.').third.to_i
   end
 
-  def sanitize_email_body(body)
+  def sanitize_and_trim_email_body(body)
+    trimmed_body = trim_email_body(body)
+    return if trimmed_body.blank?
+
     Rails::Html::WhiteListSanitizer.new.sanitize(body)
+  end
+
+  def trim_email_body(email_body)
+    trimmed_body = email_body.split(/On\s.+\swrote:/).first ||
+                   email_body.split(/From:.+Sent:/).first ||
+                   email_body.split(/Forwarded message:/).first
+
+    Rails.logger.info 'Email body is empty after trimming.' if trimmed_body.blank?
+
+    trimmed_body.strip
   end
 
   def mail_body
