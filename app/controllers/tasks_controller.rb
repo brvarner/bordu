@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_project
-  before_action :set_task, only: %i[show edit update destroy]
+  before_action :set_task, only: %i[show edit update destroy update_status]
   # before_action { authorize @task || Task }
 
   # GET /tasks or /tasks.json
@@ -53,14 +53,28 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to task_url(@task), notice: 'Task was successfully updated.' }
-        format.json { render :show, status: :ok, location: @task }
-      else
+    pp task_params
+    if @task.update(task_params)
+      ActionCable.server.broadcast 'task_channel', task: @task
+      respond_to do |format|
+        format.html { redirect_to project_path(@task.project), notice: 'Task status was successfully updated.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def update_status
+    @task = Task.find(params[:id])
+    if @task.update(status: params[:status])
+      ActionCable.server.broadcast 'task_channel', { task: @task, action: 'update_status' }
+      render json: { success: true }
+    else
+      render json: { success: false, errors: @task.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -70,8 +84,9 @@ class TasksController < ApplicationController
     @task.destroy!
 
     respond_to do |format|
-      format.html { redirect_to projects_url, notice: 'Task was successfully destroyed.' }
+      format.html { redirect_to project_path(@task.project), notice: 'Task was successfully destroyed.' }
       format.json { head :no_content }
+      format.js
     end
   end
 
@@ -86,7 +101,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :status, :project_id)
+    params.require(:task).permit(:id, :title, :description, :status, :project_id)
   end
 
   def assign_users_to_task

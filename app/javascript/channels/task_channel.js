@@ -6,11 +6,18 @@ consumer.subscriptions.create("TaskChannel", {
   disconnected() {},
 
   received(data) {
-    const taskList = document.getElementById(
-      `project-${data.task.project_id}-${data.status}-tasks`
+    // Remove the task from its current status list
+    const currentTaskElement = document.getElementById(`task-${data.task.id}`);
+    if (currentTaskElement) {
+      currentTaskElement.remove();
+    }
+
+    // Add the task to the new status list
+    const newTaskList = document.getElementById(
+      `project-${data.task.project_id}-${data.task.status}-tasks`
     );
-    if (taskList) {
-      taskList.insertAdjacentHTML("beforeend", data.task_html);
+    if (newTaskList) {
+      newTaskList.insertAdjacentHTML("beforeend", data.task_html);
     }
   },
 });
