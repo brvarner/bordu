@@ -21,6 +21,8 @@ gem 'pundit'
 
 gem 'simple_form'
 
+gem 'redis'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
