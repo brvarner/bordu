@@ -1,24 +1,25 @@
- <p>
-    <% unless assignments.empty? %>   
-      <strong>Assigned To:</strong>
-      <% if assignments.length == 1 %>
-          <%= assignments[0].recipient.first_name %> <%= assignments[0].recipient.last_name %>
-      <% elsif assignments.length == 2 %>
-          <% assignments.each { |assignment| %>
-              <% if assignment == assignments.last %>
-              and <%= assignment.recipient.first_name %> <%= assignment.recipient.last_name %>
-              <% else %>
-              <%= assignment.recipient.first_name %> <%= assignment.recipient.last_name %>
-              <% end %>
-          <% } %>
+ 
+<p>
+  <% unless assignments.empty? %>
+    <strong>Assigned To:</strong>
+    <% if assignments.length == 1 %>
+      <%= assignments[0].recipient.first_name %> <%= assignments[0].recipient.last_name %>
+    <% elsif assignments.length == 2 %>
+      <% assignments.each { |assignment| %>
+      <% if assignment == assignments.last %>
+        and <%= assignment.recipient.first_name %> <%= assignment.recipient.last_name %>
       <% else %>
-        <% assignments.each { |assignment| %>
-          <% if assignment == assignments.last %>
-            and <%= assignment.recipient.first_name %> <%= assignment.recipient.last_name %>
-          <% else %>
-            <%= assignment.recipient.first_name %> <%= assignment.recipient.last_name %>,
-          <% end %>
-        <% } %>
-      <% end%>
-    <% end %>
+        <%= assignment.recipient.first_name %> <%= assignment.recipient.last_name %>
+      <% end %>
+      <% } %>
+    <% else %>
+      <% assignments.each { |assignment| %>
+      <% if assignment == assignments.last %>
+        and <%= assignment.recipient.first_name %> <%= assignment.recipient.last_name %>
+      <% else %>
+        <%= assignment.recipient.first_name %> <%= assignment.recipient.last_name %>,
+      <% end %>
+      <% } %>
+    <% end%>
+  <% end %>
 </p>
