@@ -1,30 +1,18 @@
-<div class="jumbotron p-3 jumbotron-fluid d-flex justify-content-between align-items-center parched border-bottom-3">
+<div class="jumbotron rounded p-3 jumbotron-fluid d-flex justify-content-between align-items-center parched border-bottom-3">
   <div>
-    <h1 class="display-4">Do it Better!</h1>
-    <p class="lead">Eliminate confusion and increase velocity with the task board anyone can use!</p>
+    <h1 class="display-4 fw-bold">The task board for everyone!</h1>
+    <p class="lead">Destroy confusion with the project management tool that's easier than email.</p>
     <%= link_to 'Sign Up Now!', 'users/sign_up', class: 'btn btn-danger' %>
   </div>
   <div>
-    <%= image_tag 'Bordie.png', height: '15%', alt: "Bordie, Bordu's mascot, smiling at you!" %>
+    <%= image_tag 'Bordie.png', alt: "Bordie, Bordu's mascot, smiling at you!", class: "rounded-float-end img-fluid" %>
   </div>
 </div>
-<div class="jumbotron p-3 jumbotron-fluid d-flex row align-items-center border-bottom-3">
-  <div class="col-4">
-    <h2>
-      Step 1. Create
-    </h2>
-    <p class="lead">Create your project and assign tasks.</p>
+<%= render 'welcome/stepper' %>
+<%= render 'welcome/testimonials' %>
+<footer>
+  <div class="flex-column d-flex align-items-center my-3">
+    Questions? Comments? Want to give me money? <br>
+    <span>Email: <a href="mailto:info@bordu.vip">info at bordu.vip</a></span>
   </div>
-  <div class="col-4">
-    <h2>
-      Step 2. Watch
-    </h2>
-    <p class="lead">Watch your tasks for updates.</p>
-  </div>
-  <div class="col-4">
-    <h2>
-      Step 3. Relax
-    </h2>
-    <p class="lead">Enjoy a more efficient project flow!</p>
-  </div>
-</div>
+</footer>
