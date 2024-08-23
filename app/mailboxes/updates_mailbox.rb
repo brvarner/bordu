@@ -3,12 +3,11 @@
 class UpdatesMailbox < ApplicationMailbox
   def process
     Rails.logger.info 'Email Received'
-    # Get a user id from reply-to or bail
+
     reply_user = extract_user_id_from_email
     Rails.logger.info "Extracting User ID: #{reply_user}"
     return if reply_user.blank?
 
-    # Find a user by the id or bail
     user = User.find_by(id: reply_user)
     Rails.logger.info "Finding user: #{user.inspect}"
     return if user.nil?

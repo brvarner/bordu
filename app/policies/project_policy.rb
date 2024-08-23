@@ -12,7 +12,7 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def index?
-    true # Allow index for all authenticated users
+    true
   end
 
   def show?
