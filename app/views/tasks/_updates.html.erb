@@ -4,8 +4,10 @@
     <p>
       <strong><%= update.author.first_name %>,  <%= time_ago_in_words(update.created_at) %> ago — </strong>
       <span class="short-text"><%= truncate(update.body, length: 100) %></span>
-      <span class="full-text" style="display: none;"><%= update.body %></span>
-      <a href="#" class="read-more">Read moreCn</a>
+      <% if update.body.length > 100 %>
+        <span class="full-text" style="display: none;"><%= update.body %></span>
+        <a href="#" class="read-more">Read more</a>
+      <% end %>
     </p>
   </li>
   <% } %>
