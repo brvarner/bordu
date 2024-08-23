@@ -174,3 +174,8 @@ body {
 .navbar {
     height: 60px; /* Adjust as needed */
 }
+
+.scroll {
+  overflow-y: auto;
+  max-height: 35em; 
+}
