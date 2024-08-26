@@ -21,7 +21,9 @@
           <div class="d-flex flex-column justify-content-center align-items-center mb-3">
             <p><strong>Created At:</strong> <%= task.created_at.strftime("%A, %B %d, %Y %I:%M %p %Z") %></p>
             <p><strong>Created By:</strong> <%= task.creator.first_name %> <%= task.creator.last_name %></p>
-            <%= render 'tasks/assignments', assignments: task.assignments %>
+            <% if task.assignments %>
+              <%= render 'tasks/assignments', assignments: task.assignments %>
+            <% end %>
           </div>
           <div>
             <h4>Description</h4>
