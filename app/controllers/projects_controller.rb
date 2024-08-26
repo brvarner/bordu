@@ -11,6 +11,8 @@ class ProjectsController < ApplicationController
       redirect_to root_path and return
     end
 
+    # this line is causing an error that also renders visually on the page itself every time the user
+    # navigates to a different page
     @projects = @projects.includes(tasks: %i[assignments updates creator])
 
     @tasks_by_status = @projects.each_with_object({}) do |project, hash|

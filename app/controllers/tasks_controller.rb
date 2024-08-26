@@ -15,6 +15,7 @@ class TasksController < ApplicationController
   def new
     @project = Project.find(params[:project_id])
     @task = @project.tasks.build
+    # get rid of unused code
     # authorize @task
 
     render partial: 'form', locals: { project: @project, task: @task }
