@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_project
   before_action :set_task, only: %i[show edit update destroy update_status]
-  # before_action { authorize @task || Task }
+  before_action :authorize_task
 
   # GET /tasks or /tasks.json
   def index
@@ -91,6 +91,10 @@ class TasksController < ApplicationController
   end
 
   private
+
+  def authorize_task
+    authorize(@task || Task.new(project: @project))
+  end
 
   def set_project
     @project = Project.find(params[:project_id])

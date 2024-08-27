@@ -17,14 +17,9 @@ class TaskPolicy < ApplicationPolicy
     return false unless user.present?
 
     if record.is_a?(Task)
-      # For an existing task
       project = record.project
-    elsif record == Task
-      # For a new task (class check)
-      project_id = params[:project_id]
-      project = Project.find_by(id: project_id)
     else
-      return false
+      record
     end
 
     project&.creator == user
