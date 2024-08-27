@@ -1,11 +1,20 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["modal", "modalBody", "content", "statusInput"];
+  static targets = [
+    "modal",
+    "modalBody",
+    "content",
+    "statusInput",
+    "details",
+    "assignments",
+    "toggleAssignment",
+  ];
   static values = { status: String };
 
   connect() {
     this.modal = new bootstrap.Modal(this.modalTarget);
+    this.assignmentsVisible = false;
   }
 
   openModal(event) {
@@ -25,7 +34,6 @@ export default class extends Controller {
 
   preventClose(event) {
     event.stopPropagation();
-    console.log("Prevent close triggered");
   }
 
   async createTask(event) {
@@ -82,6 +90,24 @@ export default class extends Controller {
       }
     } catch (error) {
       console.error("Error:", error);
+    }
+  }
+
+  toggleAssignments(event) {
+    event.preventDefault();
+    this.assignmentsVisible = !this.assignmentsVisible;
+    this.updateView();
+  }
+
+  updateView() {
+    if (this.assignmentsVisible) {
+      this.detailsTarget.classList.add("d-none");
+      this.assignmentsTarget.classList.remove("d-none");
+      this.toggleAssignmentTarget.textContent = "View Details";
+    } else {
+      this.detailsTarget.classList.remove("d-none");
+      this.assignmentsTarget.classList.add("d-none");
+      this.toggleAssignmentTarget.textContent = "Assign Task";
     }
   }
 }

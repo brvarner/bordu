@@ -7,6 +7,7 @@
 #  task_id    :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  user_email :string
 #
 class TaskAssignment < ApplicationRecord
   belongs_to :task

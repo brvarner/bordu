@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :task_assignments, except: %i[index show edit create]
+  resources :task_assignments, except: %i[index show edit]
   resources :project_assignments, except: %i[index]
   resources :task_updates, except: %i[index]
   resources :projects do
