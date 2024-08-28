@@ -4,6 +4,7 @@ class TaskChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
+    # remove unused comments
     # Any cleanup needed when channel is unsubscribed
   end
 end
