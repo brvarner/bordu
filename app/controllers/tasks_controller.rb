@@ -53,7 +53,6 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
-    pp task_params
     if @task.update(task_params)
       ActionCable.server.broadcast 'task_channel', task: @task
       respond_to do |format|
@@ -105,7 +104,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:id, :title, :description, :status, :project_id)
+    params.require(:task).permit(:id, :title, :description, :status, :project_id, :assigned_user_emails)
   end
 
   def assign_users_to_task

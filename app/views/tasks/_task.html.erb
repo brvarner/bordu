@@ -18,7 +18,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div id="task-details-<%= task.id %>" data-task-target="details">
+          <div id="task-details-<%= task.id %>" data-task-target="details" data-task-id="<%= task.id %>">
             <div class="d-flex flex-column justify-content-center align-items-center mb-3">
               <p><strong>Created At:</strong> <%= task.created_at.strftime("%A, %B %d, %Y %I:%M %p %Z") %></p>
               <p><strong>Created By:</strong> <%= task.creator.first_name %> <%= task.creator.last_name %></p>
@@ -35,18 +35,18 @@
               </div>
             <% end %>
           </div>
-          <div id="task-assignments-<%= task.id %>" class="d-none" data-task-target="assignments">
+          <div id="task-assignments-<%= task.id %>" class="d-none" data-task-target="assignments" data-task-id="<%= task.id %>">
             <%= form_with(model: TaskAssignment.new, url: task_assignments_path, remote: true) do |f| %>
               <div class="form-group">
                 <%= f.label :assigned_user_emails, "Assigned User Emails (comma-separated)" %>
                 <%= f.text_field :assigned_user_emails, class: "form-control" %>
               </div>
-              <%= f.submit "Assign", class: "btn btn-primary" %>
+              <%= f.submit "Assign", class: "btn btn-primary mt-3" %>
             <% end %>
           </div>
         </div>
         <div class="modal-footer border-0">
-          <button type="button" id="toggle-assignment-<%= task.id %>" class="btn btn-primary" data-action="click->task#toggleAssignments" data-task-target="toggleAssignment">Assign Task</button>
+          <button type="button" id="toggle-assignment-<%= task.id %>" class="btn btn-primary" data-action="click->task#toggleAssignments" data-task-target="toggleAssignment" data-task-id="<%= task.id %>">Assign Task</button>
           <%= link_to 'Delete Task', project_task_path(task.project, task), method: :delete, class: 'btn btn-danger', remote: true %>
         </div>
       </div>

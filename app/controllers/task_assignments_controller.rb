@@ -21,19 +21,27 @@ class TaskAssignmentsController < ApplicationController
   def create
     @task_assignment = TaskAssignment.new(task_assignment_params)
 
-    def standard_flow
-      if @task_assignment.save
-        format.html do
-          redirect_to task_assignment_url(@task_assignment), notice: 'Task assignment was successfully created.'
-        end
-        format.json { render :show, status: :created, location: @task_assignment }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @task_assignment.errors, status: :unprocessable_entity }
+    @task = Task.find(params[:task_id]) # Assuming the task ID is passed as a parameter
+    assigned_user_emails = params[:task_assignment][:assigned_user_emails].split(',').map(&:strip)
+
+    assigned_user_emails.each do |email|
+      user = User.find_or_create_by(email:) do |user|
+        user.first_name = 'New'
+        user.last_name = 'User'
+        user.password = SecureRandom.hex(10)
       end
+
+      TaskAssignment.create(user:, task: @task)
     end
 
     respond_to do |format|
+      format.html { redirect_to @task, notice: 'Task assignment was successfully created.' }
+      format.json { render :show, status: :created, location: @task }
+    end
+  rescue ActiveRecord::RecordInvalid => e
+    respond_to do |format|
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: e.record.errors, status: :unprocessable_entity }
     end
   end
 
@@ -71,6 +79,6 @@ class TaskAssignmentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_assignment_params
-    params.require(:task_assignment).permit(:user_id, :task_id, :assigned_user_emails)
+    params.require(:task_assignment).permit(:user_id, :task_id)
   end
 end

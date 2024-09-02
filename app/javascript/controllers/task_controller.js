@@ -10,7 +10,6 @@ export default class extends Controller {
     "assignments",
     "toggleAssignment",
   ];
-  static values = { status: String };
 
   connect() {
     this.modal = new bootstrap.Modal(this.modalTarget);
@@ -95,19 +94,44 @@ export default class extends Controller {
 
   toggleAssignments(event) {
     event.preventDefault();
-    this.assignmentsVisible = !this.assignmentsVisible;
-    this.updateView();
+    const taskId = event.currentTarget.dataset.taskId;
+
+    const detailsElement = this.detailsTargets.find(
+      (element) => element.dataset.taskId === taskId
+    );
+
+    const assignmentsElement = this.assignmentsTargets.find(
+      (element) => element.dataset.taskId === taskId
+    );
+
+    const toggleAssignmentElement = this.toggleAssignmentTargets.find(
+      (element) => element.dataset.taskId === taskId
+    );
+
+    const assignmentsVisible = !assignmentsElement.classList.contains("d-none");
+
+    this.updateView(
+      detailsElement,
+      assignmentsElement,
+      toggleAssignmentElement,
+      assignmentsVisible
+    );
   }
 
-  updateView() {
-    if (this.assignmentsVisible) {
-      this.detailsTarget.classList.add("d-none");
-      this.assignmentsTarget.classList.remove("d-none");
-      this.toggleAssignmentTarget.textContent = "View Details";
+  updateView(
+    detailsElement,
+    assignmentsElement,
+    toggleAssignmentElement,
+    assignmentsVisible
+  ) {
+    if (assignmentsVisible) {
+      detailsElement.classList.remove("d-none");
+      assignmentsElement.classList.add("d-none");
+      toggleAssignmentElement.textContent = "Assign Task";
     } else {
-      this.detailsTarget.classList.remove("d-none");
-      this.assignmentsTarget.classList.add("d-none");
-      this.toggleAssignmentTarget.textContent = "Assign Task";
+      detailsElement.classList.add("d-none");
+      assignmentsElement.classList.remove("d-none");
+      toggleAssignmentElement.textContent = "View Details";
     }
   }
 }
