@@ -27,6 +27,6 @@ Rails.application.routes.draw do
   mount ActionMailbox::Engine => '/rails/action_mailbox'
   post '/rails/action_mailbox/mailgun/inbound_emails/mime' => 'action_mailbox/ingresses/mailgun/inbound_emails#create'
 
-  match '/404', to: 'errors#not_found', via: :all
-  match '/500', to: 'errors#internal_server_error', via: :all
+  match '/500', to: 'errors#internal_server_error', via: :all, as: :internal_server_error
+  match '/404', to: 'errors#not_found', via: :all, as: :not_found
 end
