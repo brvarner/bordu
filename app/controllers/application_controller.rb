@@ -21,14 +21,12 @@ class ApplicationController < ActionController::Base
 
   def user_not_authorized
     flash[:alert] = 'You are not authorized to perform this action.'
-    redirect_to root_path
-    nil
+    redirect_to(root_path) and return
   end
 
   def authorization_not_performed
     flash[:alert] = 'An authorization error occurred.'
-    redirect_to root_path
-    nil
+    redirect_to(root_path) and return
   end
 
   def pundit_policy_scoped?
