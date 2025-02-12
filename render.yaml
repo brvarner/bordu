@@ -23,7 +23,5 @@ services:
         sync: false
       - key: BORDU_DB_PASSWORD
         sync: false
-      - key: DB_HOST
-        sync: false
       - key: WEB_CONCURRENCY
         value: 2 # sensible default
