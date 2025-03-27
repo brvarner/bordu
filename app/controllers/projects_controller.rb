@@ -4,14 +4,16 @@ class ProjectsController < ApplicationController
 
   # GET /projects or /projects.json
   def index
-    @projects = Project.where(creator_id: current_user.id)
+    authorize Project
+
+    @projects = policy_scope(Project)
+                .includes(tasks: %i[assignments updates creator])
+                .order(created_at: :desc)
 
     if @projects.blank?
-      flash[:alert] = 'No projects found.'
-      redirect_to root_path and return
+      flash.now[:notice] = "You don't have any projects yet. Create your first project!"
+      return
     end
-
-    @projects = @projects.includes(tasks: %i[assignments updates creator])
 
     @tasks_by_status = @projects.each_with_object({}) do |project, hash|
       proj_tasks = project.tasks
@@ -22,8 +24,6 @@ class ProjectsController < ApplicationController
         'completed' => proj_tasks.where(status: 'completed')
       }
     end
-
-    authorize @projects
   end
 
   # GET /projects/1 or /projects/1.json
